@@ -31,7 +31,7 @@ export class OpenAiPromptComponent {
     axios.post('https://api.openai.com/v1/completions', data, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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'
+        'Authorization': 'Bearer api-key-here'
       }
     })
     .then(response => {
