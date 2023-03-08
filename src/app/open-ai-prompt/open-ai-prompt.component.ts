@@ -8,6 +8,7 @@ import { OpenAiProxyClient } from '../open-ai-common/open-ai-proxy-client'
 })
 export class OpenAiPromptComponent {
 
+  title = 'OpenAI Prompt';
   apiResponse = '';
   prompt='';
 

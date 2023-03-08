@@ -28,10 +28,10 @@ import { OpenAiGrammerComponent } from './open-ai-grammer/open-ai-grammer.compon
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      {path: 'angular-default', component: AngularDefaultComponent},
+      {path: 'home', component: AngularDefaultComponent},
       {path: 'open-ai-prompt', component: OpenAiPromptComponent},
       {path: 'open-ai-grammar', component: OpenAiGrammerComponent},
-      {path: '', redirectTo: '/angular-default', pathMatch: 'full'},
+      {path: '**', redirectTo: '/home'},
     ]),
   ],
   providers: [],
