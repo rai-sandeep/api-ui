@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import axios from 'axios';
+import { OpenAiProxyClient } from '../open-ai-common/open-ai-proxy-client'
 
 @Component({
   selector: 'app-open-ai-grammer',
@@ -11,6 +11,9 @@ export class OpenAiGrammerComponent {
   apiResponse = '';
   prompt='';
 
+  constructor(private openAiProxyClient:OpenAiProxyClient) {
+  }
+
   onInput(event: Event) {
     // Extract the input value from the event and convert it to a string
     this.prompt = (event.target as HTMLInputElement).value;
@@ -18,29 +21,11 @@ export class OpenAiGrammerComponent {
 
   getOpenAIResponse() {
     const data = {
-      model: "text-davinci-003",
-      prompt: "Correct this to standard English:\n"+this.prompt,
-      temperature: 0,
-      max_tokens: 60,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0
+      "action": "Correct this to standard English",
+      "payload": this.prompt
     };
 
-    axios.post('https://api.openai.com/v1/completions', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer api-key-here'
-      }
-    })
-    .then(response => {
-      console.log(response);
-      this.apiResponse = response.data.choices[0].text;
-    })
-    .catch(error => {
-      console.log(error);
-      this.apiResponse = 'Error occurred: ' + error.message;
-    });
+    this.openAiProxyClient.callOpenAiProxy(data).then(resp =>this.apiResponse=resp);
   }
 
 }

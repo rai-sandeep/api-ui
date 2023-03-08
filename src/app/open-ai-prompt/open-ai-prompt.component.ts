@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import axios from 'axios';
+import { OpenAiProxyClient } from '../open-ai-common/open-ai-proxy-client'
 
 @Component({
   selector: 'app-open-ai-prompt',
@@ -8,9 +8,11 @@ import axios from 'axios';
 })
 export class OpenAiPromptComponent {
 
-
   apiResponse = '';
   prompt='';
+
+  constructor(private openAiProxyClient:OpenAiProxyClient) {
+  }
 
   onInput(event: Event) {
     // Extract the input value from the event and convert it to a string
@@ -19,28 +21,10 @@ export class OpenAiPromptComponent {
 
   getOpenAIResponse() {
     const data = {
-      model: "text-davinci-003",
-      prompt: this.prompt,
-      temperature: 0.7,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0
+      "action": "",
+      "payload": this.prompt
     };
 
-    axios.post('https://api.openai.com/v1/completions', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer api-key-here'
-      }
-    })
-    .then(response => {
-      console.log(response);
-      this.apiResponse = response.data.choices[0].text;
-    })
-    .catch(error => {
-      console.log(error);
-      this.apiResponse = 'Error occurred: ' + error.message;
-    });
+    this.openAiProxyClient.callOpenAiProxy(data).then(resp =>this.apiResponse=resp);
   }
 }
