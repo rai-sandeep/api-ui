@@ -1,15 +1,19 @@
-<div class="container">
-    <mat-card>
-      <mat-card-content>
-        <mat-form-field>
-          <input matInput (input)="onInput($event)" placeholder="Enter prompt here...">
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="primary" (click)="getOpenAIResponse()">Send</button>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-content>
-        <p>{{apiResponse}}</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
+<div class="page-content">
+    <div class="container">
+        <form #openaiForm="ngForm">
+        <mat-card>
+            <mat-card-content>
+                <mat-form-field>
+                    <input matInput  matInput name="prompt" [(ngModel)]="prompt" #pmt="ngModel" required placeholder="Enter prompt here...">
+                </mat-form-field>
+                <button mat-raised-button type="submit" color="primary" (click)="getOpenAIResponse()" [disabled]="!openaiForm.form.valid">Send</button>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="apiResponse">
+            <mat-card-content>
+                <p>{{apiResponse}}</p>
+            </mat-card-content>
+        </mat-card>
+        </form>
+    </div>
+</div>

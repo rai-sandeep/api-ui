@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from '../app.service';
 import { OpenAiProxyClient } from '../open-ai-common/open-ai-proxy-client'
 
 @Component({
@@ -8,16 +9,16 @@ import { OpenAiProxyClient } from '../open-ai-common/open-ai-proxy-client'
 })
 export class OpenAiPromptComponent {
 
-  title = 'OpenAI Prompt';
+  pageMessage = 'Send a Prompt to OpenAI';
   apiResponse = '';
   prompt='';
 
-  constructor(private openAiProxyClient:OpenAiProxyClient) {
+  constructor(private openAiProxyClient:OpenAiProxyClient,
+    private appService: AppService) {
   }
 
-  onInput(event: Event) {
-    // Extract the input value from the event and convert it to a string
-    this.prompt = (event.target as HTMLInputElement).value;
+  ngOnInit() {
+    this.appService.setPageMessage(this.pageMessage);
   }
 
   getOpenAIResponse() {

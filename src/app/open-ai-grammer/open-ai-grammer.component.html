@@ -1,15 +1,19 @@
-<div class="container">
-    <mat-card>
-      <mat-card-content>
-        <mat-form-field>
-          <input matInput (input)="onInput($event)" placeholder="Enter text for grammar correction here...">
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="primary" (click)="getOpenAIResponse()">Correct Grammar</button>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-content>
-        <p>{{apiResponse}}</p>
-      </mat-card-content>
-    </mat-card>
+<div class="page-content">
+  <div class="container">
+    <form #openaiForm="ngForm">
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput name="prompt" [(ngModel)]="prompt" #pmt="ngModel" placeholder="Enter text for grammar correction here..." required>
+          </mat-form-field>
+          <button mat-raised-button type="submit" color="primary" (click)="getOpenAIResponse()" [disabled]="!openaiForm.form.valid">Correct Grammar</button>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content *ngIf="apiResponse">
+          <p>{{apiResponse}}</p>
+        </mat-card-content>
+      </mat-card>
+    </form>
   </div>
+</div>

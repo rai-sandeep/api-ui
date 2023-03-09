@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { delay } from 'rxjs';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'API UI';
+
+  pageMessage='';
+
+  constructor(private appService: AppService) {}
+
+  ngOnInit(): void {
+    this.appService
+      .getPageMessageChanged()
+      .pipe(delay(0))
+      .subscribe((pageMessage) => {
+        this.pageMessage = pageMessage;
+      });
+  }
 }
